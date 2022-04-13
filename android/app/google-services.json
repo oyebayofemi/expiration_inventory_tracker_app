@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "111806370047",
+    "project_id": "expiration-inventory-tracker",
+    "storage_bucket": "expiration-inventory-tracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111806370047:android:b33d44e309c444df72bcca",
+        "android_client_info": {
+          "package_name": "com.example.expiration_inventory_tracker_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111806370047-sh1l9kv9cmc4e5o5pl4eod3i34t5g8a8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.expiration_inventory_tracker_app",
+            "certificate_hash": "e2789f0b24f0d0b0274dc2aa0816bef588418618"
+          }
+        },
+        {
+          "client_id": "111806370047-41kh4p2vh6g2gh3dghrvd1ckm55bi4h0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXbo4gOZ5QzQvcZ0BzHYpEBMtktXZ5nJI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "111806370047-41kh4p2vh6g2gh3dghrvd1ckm55bi4h0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
