@@ -1,4 +1,7 @@
+import 'package:expiration_inventory_tracker_app/services/database.dart';
 import 'package:expiration_inventory_tracker_app/shared/clear_form_field_decoration.dart';
+import 'package:expiration_inventory_tracker_app/shared/toast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +14,7 @@ class AddPage extends StatefulWidget {
 }
 
 class _AddPageState extends State<AddPage> {
+  String userID = FirebaseAuth.instance.currentUser!.uid;
   String? name, selectedQuantityType, selectedCategory;
   int quantity = 0;
   final _formkey = GlobalKey<FormState>();
@@ -21,12 +25,14 @@ class _AddPageState extends State<AddPage> {
   var dateValue = '';
 
   final List<String> category = [
+    'select a category',
     'Raw Materials',
     'Finished Goods',
     'Maintenance, Repair, and Operating (MRO)',
     'Work In Progress (WIP)'
   ];
   final List<String> _quantityType = [
+    'select a type',
     'Cartons',
     'Pcs',
     'Crates',
@@ -58,6 +64,7 @@ class _AddPageState extends State<AddPage> {
         backgroundColor: Colors.white,
       ),
       body: Form(
+        key: _formkey,
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: SingleChildScrollView(
@@ -289,7 +296,42 @@ class _AddPageState extends State<AddPage> {
                       borderRadius: BorderRadius.circular(5)),
                   child: RaisedButton(
                     onPressed: () async {
-                      if (_formkey.currentState!.validate()) {}
+                      if (_formkey.currentState!.validate()) {
+                        if (selectedCategory == 'select a category') {
+                          showToast('Please Select a Category !!!');
+                        }
+                        if (selectedQuantityType == 'select a type') {
+                          showToast('Please Select a Quantity Type !!!');
+                        }
+                        if (quantity == 0) {
+                          showToast('Quantity must be greater than 0 !!!');
+                        } else {
+                          setState(() {
+                            _loading = true;
+                          });
+                          try {
+                            await DatabaseService(userID: userID).addItems(
+                                dateValue,
+                                name!,
+                                selectedQuantityType!,
+                                selectedCategory!,
+                                quantity);
+                            setState(() {
+                              _loading = false;
+                              dateValue = '';
+                              name = ' b';
+                              selectedQuantityType = 'select a type';
+                              selectedCategory = 'select a category';
+                              quantity = 0;
+                            });
+                          } catch (e) {
+                            setState(() {
+                              _loading = false;
+                            });
+                            print(e.toString());
+                          }
+                        }
+                      }
                     },
                     child: _loading
                         ? Center(
