@@ -1,4 +1,5 @@
 import 'package:expiration_inventory_tracker_app/screens/login_page.dart';
+import 'package:expiration_inventory_tracker_app/services/auth_controller.dart';
 import 'package:expiration_inventory_tracker_app/shared/clear_form_field_decoration.dart';
 import 'package:expiration_inventory_tracker_app/shared/form_field_decoration.dart';
 import 'package:flutter/material.dart';
@@ -192,62 +193,29 @@ class _RegisterPageState extends State<RegisterPage> {
                             borderRadius: BorderRadius.circular(5)),
                         child: RaisedButton(
                           onPressed: () async {
-                            // if (formkey.currentState!.validate()) {
-                            //   setState(() {
-                            //     _loading = true;
-                            //   });
-                            //   String? texts;
-                            //   RegExp regex = RegExp(r'@');
-                            //   if (regex.hasMatch(email!)) {
-                            //     print(email);
-                            //     texts = email;
+                            if (_formkey.currentState!.validate()) {
+                              setState(() {
+                                _loading = true;
+                              });
+                              try {
+                                await AuthControllerService().signUp(
+                                    email: email!,
+                                    password: password!,
+                                    companyname: companyname!,
+                                    fullname: fullname!,
+                                    phoneNo: phoneNo!,
+                                    context: context);
 
-                            //     try {
-                            //       await AuthController().signin(
-                            //           context: context,
-                            //           email: texts!,
-                            //           password: password!);
-
-                            //       setState(() {
-                            //         _loading = false;
-                            //       });
-                            //     } catch (e) {
-                            //       print(e);
-                            //       setState(() {
-                            //         _loading = false;
-                            //       });
-                            //       // showSnackBar(
-                            //       //     context, 'Enter a valid Username');
-                            //       showToast(e.toString());
-                            //     }
-                            //   } else {
-                            //     try {
-                            //       QuerySnapshot snap = await FirebaseFirestore
-                            //           .instance
-                            //           .collection("users")
-                            //           .where("username", isEqualTo: email)
-                            //           .get();
-                            //       texts = snap.docs[0]['email'];
-                            //       await AuthController().signin(
-                            //           context: context,
-                            //           email: texts!,
-                            //           password: password!);
-
-                            //       setState(() {
-                            //         _loading = false;
-                            //       });
-                            //     } catch (e) {
-                            //       print(e);
-                            //       setState(() {
-                            //         _loading = false;
-                            //       });
-                            //       // showSnackBar(
-                            //       //     context, 'Enter a valid Username');
-                            //       showToast('Enter a valid Username');
-                            //     }
-                            //     print('$texts');
-                            //   }
-                            // }
+                                setState(() {
+                                  _loading = false;
+                                });
+                              } catch (e) {
+                                setState(() {
+                                  _loading = false;
+                                });
+                                print(e.toString());
+                              }
+                            }
                           },
                           child: _loading
                               ? Center(

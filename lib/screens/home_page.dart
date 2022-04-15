@@ -1,5 +1,6 @@
 import 'package:expiration_inventory_tracker_app/screens/add_page.dart';
 import 'package:expiration_inventory_tracker_app/screens/inventory_list.dart';
+import 'package:expiration_inventory_tracker_app/services/auth_controller.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,11 +23,7 @@ class _HomePageState extends State<HomePage> {
               color: Colors.white,
               onSelected: (value) {
                 if (value == 0) {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => AllMarker(),
-                  //     ));
+                  AuthControllerService().signout();
                 }
               },
               icon: Icon(Icons.more_vert_rounded),
