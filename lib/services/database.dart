@@ -8,15 +8,16 @@ class DatabaseService {
   var itemcollections = FirebaseFirestore.instance.collection('items');
 
   addItems(String dateValue, String name, String selectedQuantityType,
-      String selectedCategory, int quantity) async {
+      String selectedCategory, int quantity, DateTime date) async {
     try {
-      await itemcollections.doc(userID).set({
+      await itemcollections.doc(userID).collection('items').add({
         'userID': userID,
         'name': name,
         'quantityType': selectedQuantityType,
         'quantity': quantity,
         'category': selectedCategory,
         'expiryDate': dateValue,
+        'date': date,
       });
       showToast('Item added Successful');
     } catch (e) {

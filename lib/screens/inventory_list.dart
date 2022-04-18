@@ -1,5 +1,11 @@
 import 'package:expiration_inventory_tracker_app/model/menu_data_model.dart';
+import 'package:expiration_inventory_tracker_app/screens/finished_goods_list.dart';
+import 'package:expiration_inventory_tracker_app/screens/mro_list.dart';
+import 'package:expiration_inventory_tracker_app/screens/raw_materials_list.dart';
+import 'package:expiration_inventory_tracker_app/screens/show_all_list.dart';
+import 'package:expiration_inventory_tracker_app/screens/wip_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InventoryList extends StatelessWidget {
   const InventoryList({Key? key}) : super(key: key);
@@ -25,27 +31,67 @@ class InventoryList extends StatelessWidget {
           ),
           itemCount: menu.length,
           itemBuilder: (BuildContext context, int index) {
-            return Container(
-              height: 200,
-              child: Card(
-                semanticContainer: true,
-                shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.grey, width: 1),
-                    borderRadius: BorderRadius.circular(15.0)),
-                child: Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 100,
-                        width: double.maxFinite,
-                        child: Image.asset(menu[index].url),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(menu[index].title),
-                    ],
+            return InkWell(
+              onTap: () {
+                if (menu[index].title == 'Show All Items') {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ShowAllItems(),
+                      ));
+                }
+                if (menu[index].title == 'Raw Materials') {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ShowAllItemsRawMaterials(),
+                      ));
+                }
+                if (menu[index].title == 'Finished Goods') {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ShowAllItemsFinishedGoods(),
+                      ));
+                }
+                if (menu[index].title ==
+                    'Maintannce, Repair, and Operating (MRO)') {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ShowAllItemsMRO(),
+                      ));
+                }
+                if (menu[index].title == 'Work in Progress(WIP)') {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ShowAllItemsFinishedWIP(),
+                      ));
+                }
+              },
+              child: Container(
+                height: 190.h,
+                child: Card(
+                  semanticContainer: true,
+                  shape: RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.grey, width: 1.w),
+                      borderRadius: BorderRadius.circular(15.0.r)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(14.0),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 220.h,
+                          width: double.maxFinite,
+                          child: Image.asset(menu[index].url),
+                        ),
+                        SizedBox(
+                          height: 35.h,
+                        ),
+                        Text(menu[index].title),
+                      ],
+                    ),
                   ),
                 ),
               ),

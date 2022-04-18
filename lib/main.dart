@@ -3,6 +3,7 @@ import 'package:expiration_inventory_tracker_app/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,12 +22,15 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthControllerService(),
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.orange,
+      child: ScreenUtilInit(
+        designSize: Size(1080, 2340),
+        builder: (BuildContext c) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.orange,
+          ),
+          home: Wrapper(),
         ),
-        home: Wrapper(),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:expiration_inventory_tracker_app/screens/login_page.dart';
 import 'package:expiration_inventory_tracker_app/screens/register_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Welcome extends StatelessWidget {
   const Welcome({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class Welcome extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'Poppins',
-                        fontSize: 25,
+                        fontSize: 45.sp,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1,
                       ),
@@ -43,7 +44,7 @@ class Welcome extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'Poppins',
-                        fontSize: 25,
+                        fontSize: 45.sp,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1,
                       ),
@@ -53,32 +54,32 @@ class Welcome extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'Poppins',
-                        fontSize: 25,
+                        fontSize: 45.sp,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1,
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 10.h,
                     ),
                     Text(
                       'This application helps you manage your inventory and the expiring date of each items, by tracking the expirng date and send the notification when its about to expire',
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'Poppins',
-                        fontSize: 15,
+                        fontSize: 45.sp,
                         //fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 20.h,
                     ),
                     ButtonTheme(
                       buttonColor: Colors.white,
                       minWidth: double.infinity,
-                      height: 60,
+                      height: 100.h,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5)),
+                          borderRadius: BorderRadius.circular(15.r)),
                       child: FlatButton(
                         color: Colors.white,
                         onPressed: () async {
@@ -93,22 +94,22 @@ class Welcome extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.orange,
                             fontFamily: 'Poppins',
-                            fontSize: 15,
+                            fontSize: 35.sp,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 10.h,
                     ),
                     ButtonTheme(
                       buttonColor: Colors.orange,
                       minWidth: double.infinity,
-                      height: 60,
+                      height: 100.h,
                       shape: RoundedRectangleBorder(
                           side: BorderSide(color: Colors.white, width: 2),
-                          borderRadius: BorderRadius.circular(5)),
+                          borderRadius: BorderRadius.circular(15.r)),
                       child: FlatButton(
                         onPressed: () async {
                           Navigator.push(
@@ -122,7 +123,7 @@ class Welcome extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Poppins',
-                            fontSize: 15,
+                            fontSize: 35.sp,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

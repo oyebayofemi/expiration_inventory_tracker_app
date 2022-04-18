@@ -1,3 +1,5 @@
+import 'package:expiration_inventory_tracker_app/api/notification_api.dart';
+import 'package:expiration_inventory_tracker_app/screens/home_page.dart';
 import 'package:expiration_inventory_tracker_app/services/database.dart';
 import 'package:expiration_inventory_tracker_app/shared/clear_form_field_decoration.dart';
 import 'package:expiration_inventory_tracker_app/shared/toast.dart';
@@ -19,8 +21,9 @@ class _AddPageState extends State<AddPage> {
   int quantity = 0;
   final _formkey = GlobalKey<FormState>();
   bool _loading = false;
+  int id = 0;
 
-  DateTime? date;
+  DateTime? date, dates;
   var myFormat = DateFormat('d-MM-yyyy');
   var dateValue = '';
 
@@ -50,11 +53,32 @@ class _AddPageState extends State<AddPage> {
 
     if (newDate == null) return;
     setState(() {
-      date = newDate;
+      dates = newDate;
+      date = newDate.add(Duration(hours: 8));
       dateValue = '${myFormat.format(newDate)}';
+      selectedDate = date!.subtract(Duration(
+        days: 3,
+      ));
     });
   }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    listenNotifications();
+  }
+
+  void listenNotifications() =>
+      NotificationApi.onNotifications.stream.listen(onClickedNotification);
+
+  void onClickedNotification(String? payload) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => HomePage(),
+    ));
+  }
+
+  DateTime? selectedDate;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,7 +122,7 @@ class _AddPageState extends State<AddPage> {
                     color: Colors.black,
                     fontFamily: 'Poppins',
                   ),
-                  onChanged: (value) => this.name = value,
+                  onChanged: (value) => name = value,
                   //autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) => value!.isEmpty
                       ? 'Product Name Field cant be empty'
@@ -297,32 +321,49 @@ class _AddPageState extends State<AddPage> {
                   child: RaisedButton(
                     onPressed: () async {
                       if (_formkey.currentState!.validate()) {
-                        if (selectedCategory == 'select a category') {
-                          showToast('Please Select a Category !!!');
-                        }
-                        if (selectedQuantityType == 'select a type') {
-                          showToast('Please Select a Quantity Type !!!');
-                        }
-                        if (quantity == 0) {
-                          showToast('Quantity must be greater than 0 !!!');
+                        if (selectedCategory == 'select a category' ||
+                            selectedQuantityType == 'select a type' ||
+                            quantity == 0 ||
+                            date == null) {
+                          if (selectedCategory == 'select a category') {
+                            showToast('Please Select a Category !!!');
+                          } else if (selectedQuantityType == 'select a type') {
+                            showToast('Please Select a Quantity Type !!!');
+                          } else if (date == null) {
+                            showToast('Please select a date !!!');
+                          } else {
+                            showToast('Quantity must be greater than 0 !!!');
+                          }
                         } else {
                           setState(() {
                             _loading = true;
                           });
                           try {
+                            NotificationApi.showScheduleNotifications(
+                                id: id,
+                                title: 'PRODUCT EXPIRES IN 3 DAYS!!!',
+                                body:
+                                    'Product $name will expire in 3 days fron now !!!',
+                                payload: 'expire_$name',
+                                scheduleDateTime: selectedDate!);
+
                             await DatabaseService(userID: userID).addItems(
                                 dateValue,
                                 name!,
                                 selectedQuantityType!,
                                 selectedCategory!,
-                                quantity);
+                                quantity,
+                                dates!);
+                            print(selectedDate);
                             setState(() {
+                              id++;
                               _loading = false;
                               dateValue = '';
                               name = ' b';
                               selectedQuantityType = 'select a type';
                               selectedCategory = 'select a category';
                               quantity = 0;
+                              date = null;
                             });
                           } catch (e) {
                             setState(() {
